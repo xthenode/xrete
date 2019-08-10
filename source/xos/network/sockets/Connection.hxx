@@ -13,57 +13,53 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: Transport.hxx
+///   File: Connection.hxx
 ///
 /// Author: $author$
-///   Date: 8/9/2019
+///   Date: 8/10/2019
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NETWORK_SOCKETS_IP_TCP_TRANSPORT_HXX_
-#define _XOS_NETWORK_SOCKETS_IP_TCP_TRANSPORT_HXX_
+#ifndef _XOS_NETWORK_SOCKETS_CONNECTION_HXX_
+#define _XOS_NETWORK_SOCKETS_CONNECTION_HXX_
 
-#include "xos/network/sockets/ip/Transport.hxx"
+#include "xos/network/sockets/Endpoint.hxx"
+#include "xos/network/Connection.hxx"
 
 namespace xos {
 namespace network {
 namespace sockets {
-namespace ip {
-namespace tcp {
 
 ///////////////////////////////////////////////////////////////////////
-///  Class: TransportT
+///  Class: ConnectionT
 ///////////////////////////////////////////////////////////////////////
-template <class TImplements = ip::Transport>
-class _EXPORT_CLASS TransportT: virtual public TImplements {
+template 
+<class TEndpoint = Endpoint, 
+ class TImplements = Implement, class TExtends = Extend>
+
+class _EXPORT_CLASS ConnectionT: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
+    typedef TExtends Extends;
 
-    typedef typename Implements::tDomain tDomain;
-    enum { vDomainUnspec = Implements::vDomainUnspec };
+    typedef TEndpoint Endpoint;
     
-    typedef typename Implements::tType tType;
-    enum { vTypeUnspec = Implements::vTypeUnspec };
-    
-    typedef typename Implements::tProtocol tProtocol;
-    enum { vProtocolUnspec = Implements::vProtocolUnspec };
-
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual tType Type() const {
-        return SOCK_STREAM;
+    ConnectionT(const Endpoint& endpoint) {
     }
-    virtual tProtocol Protocol() const {
-        return IPPROTO_TCP;
+    ConnectionT(const ConnectionT& copy) {
     }
-    
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-}; /// class _EXPORT_CLASS TransportT
-typedef TransportT<> Transport;
+    ConnectionT() {
+    }
+    virtual ~ConnectionT() {
+    }
 
-} /// namespace tcp
-} /// namespace ip
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+}; /// class _EXPORT_CLASS ConnectionT
+typedef ConnectionT<> Connection;
+
 } /// namespace sockets
 } /// namespace network
 } /// namespace xos
 
-#endif /// _XOS_NETWORK_SOCKETS_IP_TCP_TRANSPORT_HXX_
+#endif /// _XOS_NETWORK_SOCKETS_CONNECTION_HXX_

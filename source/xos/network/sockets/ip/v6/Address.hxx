@@ -55,11 +55,50 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    AddressT(const String& host, AddrIndex index) {
+        this->Init();
+        if (!(this->Attach(host, index))) {
+            LOG_ERROR("...failed on Attach(host, index) throw Exception(ExceptionFailed)...")
+            throw Exception(ExceptionFailed);
+        }
+    }
+    AddressT(const String& host) {
+        this->Init();
+        if (!(this->Attach(host))) {
+            LOG_ERROR("...failed on Attach(host) throw Exception(ExceptionFailed)...")
+            throw Exception(ExceptionFailed);
+        }
+    }
+    AddressT(const char* host, AddrIndex index) {
+        this->Init();
+        if (!(this->Attach(host, index))) {
+            LOG_ERROR("...failed on Attach(host, index) throw Exception(ExceptionFailed)...")
+            throw Exception(ExceptionFailed);
+        }
+    }
+    AddressT(const char* host) {
+        this->Init();
+        if (!(this->Attach(host))) {
+            LOG_ERROR("...failed on Attach(host) throw Exception(ExceptionFailed)...")
+            throw Exception(ExceptionFailed);
+        }
+    }
+    AddressT(const SockAddrAttached socketAddress, SockLen socketAddressLen) {
+        this->Init();
+        if (!(this->Attach(socketAddress, socketAddressLen))) {
+            LOG_ERROR("...failed on Attach(socketAddress, socketAddressLen) throw Exception(ExceptionFailed)...")
+            throw Exception(ExceptionFailed);
+        }
+    }
     AddressT(const AddressT& copy): Extends(copy) {
         this->Copy(copy);
     }
     AddressT() {
         this->Init();
+        if (!(this->Attach())) {
+            LOG_ERROR("...failed on Attach() throw Exception(ExceptionFailed)...")
+            throw Exception(ExceptionFailed);
+        }
     }
     virtual ~AddressT() {
         this->Fini();
@@ -67,13 +106,13 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    using Implements::Attach;
+    using Extends::Attach;
     virtual SockAddrAttached Attach(const SockAddrAttached socketAddress, SockLen socketAddressLen) {
         if ((socketAddress) && (socketAddressLen == (this->SocketAddressLen()))) {
             if (this->Family() == (socketAddress->sa_family)) {
                 SockAddrAttached attached = 0;
                 if ((attached = this->Attach())) {
-                    const SockAddr& sockAddr = (const SockAddr&)(*socketAddress);
+                    const VersionSockAddr& sockAddr = (const VersionSockAddr&)(*socketAddress);
                     _socketAddress.sin6_addr = sockAddr.sin6_addr;
                 }
                 return attached;

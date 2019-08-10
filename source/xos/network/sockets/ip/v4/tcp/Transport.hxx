@@ -16,54 +16,46 @@
 ///   File: Transport.hxx
 ///
 /// Author: $author$
-///   Date: 8/9/2019
+///   Date: 8/10/2019
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NETWORK_SOCKETS_IP_TCP_TRANSPORT_HXX_
-#define _XOS_NETWORK_SOCKETS_IP_TCP_TRANSPORT_HXX_
+#ifndef _XOS_NETWORK_SOCKETS_IP_V4_TCP_TRANSPORT_HXX_
+#define _XOS_NETWORK_SOCKETS_IP_V4_TCP_TRANSPORT_HXX_
 
-#include "xos/network/sockets/ip/Transport.hxx"
+#include "xos/network/sockets/ip/tcp/Transport.hxx"
 
 namespace xos {
 namespace network {
 namespace sockets {
 namespace ip {
+namespace v4 {
 namespace tcp {
 
 ///////////////////////////////////////////////////////////////////////
 ///  Class: TransportT
 ///////////////////////////////////////////////////////////////////////
-template <class TImplements = ip::Transport>
+template <class TImplements = ip::tcp::Transport>
 class _EXPORT_CLASS TransportT: virtual public TImplements {
 public:
     typedef TImplements Implements;
 
     typedef typename Implements::tDomain tDomain;
-    enum { vDomainUnspec = Implements::vDomainUnspec };
     
-    typedef typename Implements::tType tType;
-    enum { vTypeUnspec = Implements::vTypeUnspec };
-    
-    typedef typename Implements::tProtocol tProtocol;
-    enum { vProtocolUnspec = Implements::vProtocolUnspec };
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual tDomain Domain() const {
+        return PF_INET;
+    }
 
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual tType Type() const {
-        return SOCK_STREAM;
-    }
-    virtual tProtocol Protocol() const {
-        return IPPROTO_TCP;
-    }
-    
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 }; /// class _EXPORT_CLASS TransportT
 typedef TransportT<> Transport;
 
 } /// namespace tcp
+} /// namespace v4
 } /// namespace ip
 } /// namespace sockets
 } /// namespace network
 } /// namespace xos
 
-#endif /// _XOS_NETWORK_SOCKETS_IP_TCP_TRANSPORT_HXX_
+#endif /// _XOS_NETWORK_SOCKETS_IP_V4_TCP_TRANSPORT_HXX_

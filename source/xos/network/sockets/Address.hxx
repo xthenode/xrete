@@ -23,6 +23,7 @@
 
 #include "xos/network/Address.hxx"
 #include "xos/base/Attached.hxx"
+#include "xos/base/String.hxx"
 #include "xos/logger/Interface.hxx"
 
 #include <sys/socket.h>
@@ -39,6 +40,7 @@ namespace sockets {
 typedef socklen_t SockLen;
 typedef struct sockaddr SockAddr;
 
+namespace extended {
 ///////////////////////////////////////////////////////////////////////
 ///  Class: AddressT
 ///////////////////////////////////////////////////////////////////////
@@ -51,7 +53,7 @@ template
  TAddrIndex VLastAddrIndex = address::LastIndex,
  class TImplement = network::Address,
  class TImplements = AttacherT<TSockAddrAttached, int, 0, TImplement>,
- class TExtends = Extend>
+ class TExtends = AttachedT<TSockAddrAttached, int, 0, TImplements, Extend> >
 
 class _EXPORT_CLASS AddressT: virtual public TImplements, public TExtends {
 public:
@@ -105,15 +107,15 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual SockAddrAttached AttachFirst(const char* host) {
-        if ((host)) { return this->Attach(host, FirstAddrIndex); }
+        if ((host) && (HostAny().compare(host))) { return this->Attach(host, FirstAddrIndex); }
         return this->Attach();
     }
     virtual SockAddrAttached AttachLast(const char* host) {
-        if ((host)) { return this->Attach(host, LastAddrIndex); }
+        if ((host) && (HostAny().compare(host))) { return this->Attach(host, LastAddrIndex); }
         return this->Attach();
     }
     virtual SockAddrAttached Attach(const char* host) {
-        if ((host)) { return this->Attach(host, FirstAddrIndex); }
+        if ((host) && (HostAny().compare(host))) { return this->Attach(host, FirstAddrIndex); }
         return this->Attach();
     }
 
@@ -169,6 +171,7 @@ public:
     virtual SockAddrAttached Attach() {
         return 0;
     }
+    using Extends::Attach;
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -194,6 +197,13 @@ public:
     ///////////////////////////////////////////////////////////////////////
     virtual int LastError() const {
         return errno;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    static const String& HostAny() {
+        static const String hostAny("*");
+        return hostAny;
     }
 
 protected:
@@ -233,12 +243,14 @@ protected:
 protected:
     SockLen _socketAddressLen;
 }; /// class _EXPORT_CLASS AddressT
-typedef AddressT<> AddressExtends;
+typedef AddressT<> Address;
+} /// namespace extended
 
-class _EXPORT_CLASS Address: virtual public AddressExtends::Implements, public AddressExtends {
+class _EXPORT_CLASS Address
+: virtual public extended::Address::Implements, public extended::Address {
 public:
-    typedef AddressExtends::Implements Implements;
-    typedef AddressExtends Extends;
+    typedef extended::Address::Implements Implements;
+    typedef extended::Address Extends;
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////

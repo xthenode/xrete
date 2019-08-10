@@ -13,57 +13,71 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: Transport.hxx
+///   File: Endpoint.hxx
 ///
 /// Author: $author$
-///   Date: 8/9/2019
+///   Date: 8/10/2019
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NETWORK_SOCKETS_IP_TCP_TRANSPORT_HXX_
-#define _XOS_NETWORK_SOCKETS_IP_TCP_TRANSPORT_HXX_
+#ifndef _XOS_NETWORK_SOCKETS_IP_V4_ENDPOINT_HXX_
+#define _XOS_NETWORK_SOCKETS_IP_V4_ENDPOINT_HXX_
 
-#include "xos/network/sockets/ip/Transport.hxx"
+#include "xos/network/sockets/ip/v4/Address.hxx"
+#include "xos/network/sockets/ip/Endpoint.hxx"
 
 namespace xos {
 namespace network {
 namespace sockets {
 namespace ip {
-namespace tcp {
+namespace v4 {
 
 ///////////////////////////////////////////////////////////////////////
-///  Class: TransportT
+///  Class: EndpointT
 ///////////////////////////////////////////////////////////////////////
-template <class TImplements = ip::Transport>
-class _EXPORT_CLASS TransportT: virtual public TImplements {
+template 
+<class TExtends = ip::Endpoint, class TImplements = typename TExtends::Implements>
+
+class _EXPORT_CLASS EndpointT: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
-
-    typedef typename Implements::tDomain tDomain;
-    enum { vDomainUnspec = Implements::vDomainUnspec };
-    
-    typedef typename Implements::tType tType;
-    enum { vTypeUnspec = Implements::vTypeUnspec };
-    
-    typedef typename Implements::tProtocol tProtocol;
-    enum { vProtocolUnspec = Implements::vProtocolUnspec };
+    typedef TExtends Extends;
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual tType Type() const {
-        return SOCK_STREAM;
+    EndpointT(const Address& address, unsigned port): _address(address), _port(port) {
+        this->Init();
     }
-    virtual tProtocol Protocol() const {
-        return IPPROTO_TCP;
+    EndpointT(const EndpointT& copy) {
     }
-    
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-}; /// class _EXPORT_CLASS TransportT
-typedef TransportT<> Transport;
+    EndpointT(unsigned port): _port(port) {
+        this->Init();
+    }
+    EndpointT(): _port(0) {
+        this->Init();
+    }
+    virtual ~EndpointT() {
+        this->Fini();
+    }
 
-} /// namespace tcp
+protected:
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual void Init() {
+    }
+    virtual void Fini() {
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+protected:
+    Address _address;
+    unsigned _port;
+}; /// class _EXPORT_CLASS EndpointT
+typedef EndpointT<> Endpoint;
+
+} /// namespace v4
 } /// namespace ip
 } /// namespace sockets
 } /// namespace network
 } /// namespace xos
 
-#endif /// _XOS_NETWORK_SOCKETS_IP_TCP_TRANSPORT_HXX_
+#endif /// _XOS_NETWORK_SOCKETS_IP_V4_ENDPOINT_HXX_

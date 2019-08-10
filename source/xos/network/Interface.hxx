@@ -13,57 +13,33 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: Transport.hxx
+///   File: Interface.hxx
 ///
 /// Author: $author$
-///   Date: 8/9/2019
+///   Date: 8/10/2019
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NETWORK_SOCKETS_IP_TCP_TRANSPORT_HXX_
-#define _XOS_NETWORK_SOCKETS_IP_TCP_TRANSPORT_HXX_
+#ifndef _XOS_NETWORK_INTERFACE_HXX_
+#define _XOS_NETWORK_INTERFACE_HXX_
 
-#include "xos/network/sockets/ip/Transport.hxx"
+#include "xos/base/Base.hxx"
 
 namespace xos {
 namespace network {
-namespace sockets {
-namespace ip {
-namespace tcp {
 
 ///////////////////////////////////////////////////////////////////////
-///  Class: TransportT
+///  Class: InterfaceT
 ///////////////////////////////////////////////////////////////////////
-template <class TImplements = ip::Transport>
-class _EXPORT_CLASS TransportT: virtual public TImplements {
+template <class TImplements = Implement>
+class _EXPORT_CLASS InterfaceT: virtual public TImplements {
 public:
     typedef TImplements Implements;
 
-    typedef typename Implements::tDomain tDomain;
-    enum { vDomainUnspec = Implements::vDomainUnspec };
-    
-    typedef typename Implements::tType tType;
-    enum { vTypeUnspec = Implements::vTypeUnspec };
-    
-    typedef typename Implements::tProtocol tProtocol;
-    enum { vProtocolUnspec = Implements::vProtocolUnspec };
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+}; /// class _EXPORT_CLASS InterfaceT
+typedef InterfaceT<> Interface;
 
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual tType Type() const {
-        return SOCK_STREAM;
-    }
-    virtual tProtocol Protocol() const {
-        return IPPROTO_TCP;
-    }
-    
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-}; /// class _EXPORT_CLASS TransportT
-typedef TransportT<> Transport;
-
-} /// namespace tcp
-} /// namespace ip
-} /// namespace sockets
 } /// namespace network
 } /// namespace xos
 
-#endif /// _XOS_NETWORK_SOCKETS_IP_TCP_TRANSPORT_HXX_
+#endif /// _XOS_NETWORK_INTERFACE_HXX_
