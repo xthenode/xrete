@@ -65,7 +65,15 @@ $${XRETE_SRC}/xos/network/Transport.hxx \
 $${XRETE_SRC}/xos/network/sockets/Transport.hxx \
 $${XRETE_SRC}/xos/network/sockets/ip/Transport.hxx \
 $${XRETE_SRC}/xos/network/sockets/ip/tcp/Transport.hxx \
+$${XRETE_SRC}/xos/network/sockets/ip/v4/tcp/Transport.hxx \
 $${XRETE_SRC}/xos/network/sockets/ip/udp/Transport.hxx \
+$${XRETE_SRC}/xos/network/sockets/ip/v4/udp/Transport.hxx \
+\
+$${XRETE_SRC}/xos/network/Connection.hxx \
+$${XRETE_SRC}/xos/network/sockets/Connection.hxx \
+\
+$${XRETE_SRC}/xos/network/sockets/Interface.hxx \
+$${XRETE_SRC}/xos/network/sockets/posix/Interface.hxx \
 \
 $${XRETE_SRC}/xos/app/console/xrete/MainOpt.hxx \
 $${XRETE_SRC}/xos/app/console/xrete/Main.hxx \
@@ -75,7 +83,9 @@ $${XRETE_SRC}/xos/app/console/xrete/Main.hxx \
 xrete_exe_SOURCES += \
 \
 $${XRETE_SRC}/xos/network/sockets/Addresses.cxx \
-$${XRETE_SRC}/xos/network/sockets/ip/tcp/Transport.cxx \
+$${XRETE_SRC}/xos/network/sockets/ip/v4/tcp/Transport.cxx \
+$${XRETE_SRC}/xos/network/sockets/posix/Interface.cxx \
+$${XRETE_SRC}/xos/network/sockets/Connection.cxx \
 \
 $${XRETE_SRC}/xos/app/console/xrete/MainOpt.cxx \
 $${XRETE_SRC}/xos/app/console/xrete/Main.cxx \
