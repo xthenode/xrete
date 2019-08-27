@@ -48,8 +48,10 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     MainT(): _run(0), 
+        _clientPort(80), _serverPort(8080),
         _clientHost("localhost"), _serverHost("*"),
-        _clientPort(80), _serverPort(8080) {
+        _clientRequest("GET / HTTP/1.0\n\n\n"), 
+        _serverResponse("HTTP/1.0 200 OK\n\n\nHello\n") {
     }
     virtual ~MainT() {
     }
@@ -78,7 +80,8 @@ protected:
             network::sockets::ip::v4::Address address(Host());
             network::sockets::ip::v4::Endpoint endpoint(address, Port());
             network::sockets::posix::Interface socket(transport);
-            network::sockets::Connection connection(endpoint);
+            network::sockets::Connection connection(socket, endpoint);
+            Request(connection);
             this->OutLLn("...} try", NULL);
         } catch (const Exception& e) {
             this->OutLLn("...catch (const Exception& e(\"", e.StatusToString().Chars(), "\"))", NULL);
@@ -96,6 +99,41 @@ protected:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t Request(network::sockets::Connection& connection) {
+        ssize_t count = 0, amount = 0;
+        if (0 < (amount = SendRequest(connection))) {
+            count += amount;
+            if (0 < (amount = RecvResponse(connection))) {
+                count += amount;
+            }
+        }
+        return count;
+    }
+    virtual ssize_t SendRequest(network::sockets::Connection& connection) {
+        ssize_t count = 0, amount = 0;
+        size_t length = 0;
+        const char* chars = 0;
+        if ((chars = _clientRequest.Chars(length))) {
+            this->Out(chars, length);
+            if (0 < (amount = connection.Send(chars, length))) {
+                count += amount;
+            }
+        }
+        return count;
+    }
+    virtual ssize_t RecvResponse(network::sockets::Connection& connection) {
+        ssize_t count = 0, amount = 0;
+        do {
+            if (0 < (amount = connection.Recv(_response, sizeof(_response)))) {
+                this->Out(_response, amount);
+                count += amount;
+            }
+        } while (amount >= sizeof(_response));
+        return count;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual const String& Host() const {
         return _clientHost;
     }
@@ -106,8 +144,9 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 protected:
-    String _clientHost, _serverHost;
     unsigned _clientPort, _serverPort;
+    String _clientHost, _serverHost, _clientRequest, _serverResponse;
+    char _response[2048];
 }; /// class _EXPORT_CLASS MainT
 typedef MainT<> Main;
 

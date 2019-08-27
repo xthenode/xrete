@@ -93,6 +93,7 @@ public:
     }
     AddressT(const AddressT& copy): Extends(copy) {
         this->Copy(copy);
+        Extends::Attach((SockAddrAttached)(&_socketAddress));
     }
     AddressT() {
         this->Init();
@@ -127,6 +128,10 @@ public:
         _socketAddress.sin_addr.s_addr = INADDR_ANY;
         _socketAddress.sin_port = htons(0);
         return Extends::Attach((SockAddrAttached)(&_socketAddress));
+    }
+    virtual unsigned AttachPort(unsigned port) {
+        _socketAddress.sin_port = htons(port);
+        return port;
     }
 
     ///////////////////////////////////////////////////////////////////////

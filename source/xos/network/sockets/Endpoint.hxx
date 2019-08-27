@@ -55,19 +55,19 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual SockAddrAttached SocketAddress(SockLen& len) const {
-        len = SocketAddressLen();
+        len = this->SocketAddressLen();
         return this->SocketAddress();
     }
     virtual SockAddrAttached SocketAddress() const {
         Address* address = 0;
-        if ((address = AddressAttached())) {
+        if ((address = this->AddressAttached())) {
             return address->SocketAddress();
         }
         return 0;
     }
     virtual SockLen SocketAddressLen() const {
         Address* address = 0;
-        if ((address = AddressAttached())) {
+        if ((address = this->AddressAttached())) {
             return address->SocketAddressLen();
         }
         return 0;

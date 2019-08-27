@@ -108,6 +108,57 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    using Implements::Connect;
+    virtual bool Connect(const SockAddr* addr, SockLen addrlen) {
+        Attached detached = ((Attached)Unattached);
+
+        if ((0 <= (detached = this->AttachedTo())) && (addr) && (addrlen)) {
+            int err = 0;
+
+            LOG_DEBUG("::connect(..., addrlen = " << addrlen << ")...");
+            if (!(err = ::connect(detached, addr, addrlen))) {
+                LOG_DEBUG("...::connect(..., addrlen = " << addrlen << ")...");
+                return true;
+            } else {
+                LOG_ERROR("...failed errno = " << errno << " on ::connect(..., addrlen = " << addrlen << ")");
+            }
+        }
+        return false;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t Send(const void* buf, size_t len, SendFlags flags) { 
+        Attached detached = ((Attached)Unattached);
+        if ((0 <= (detached = this->AttachedTo())) && (buf) && (len)) {
+            ssize_t count = 0;
+            LOG_DEBUG_TRACE((len > 1), "::send(..., len = " << len << ", flags = " << flags << ")...");
+            if (0 <= (count = ::send(detached, buf, len, flags))) {
+                LOG_DEBUG_TRACE((len > 1), "..." << count << " = ::send(..., len = " << len << ", flags = " << flags << ")...");
+                return count;
+            } else {
+                XOS_LOG_ERROR("...failed errno = " << errno << " on ::send(..., len = " << len << ", flags = " << flags << ")");
+            }
+        }
+        return 0; 
+    }
+    virtual ssize_t Recv(void* buf, size_t len, RecvFlags flags) { 
+        Attached detached = ((Attached)Unattached);
+        if ((0 <= (detached = this->AttachedTo())) && (buf) && (len)) {
+            ssize_t count = 0;
+            LOG_DEBUG_TRACE((len > 1), "::recv(..., len = " << len << ", flags = " << flags << ")...");
+            if (0 <= (count = ::recv(detached, buf, len, flags))) {
+                LOG_DEBUG_TRACE((len > 1), "..." << count << " = ::recv(..., len = " << len << ", flags = " << flags << ")...");
+                return count;
+            } else {
+                XOS_LOG_ERROR("...failed errno = " << errno << " on ::recv(..., len = " << len << ", flags = " << flags << ")");
+            }
+        }
+        return 0; 
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual Attached OpenDetached(Domain domain, Type type, Protocol protocol) const {
         Attached detached = ((Attached)Unattached);
 

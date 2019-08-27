@@ -22,6 +22,7 @@
 #define _XOS_NETWORK_SOCKETS_CONNECTION_HXX_
 
 #include "xos/network/sockets/Endpoint.hxx"
+#include "xos/network/sockets/Interface.hxx"
 #include "xos/network/Connection.hxx"
 
 namespace xos {
@@ -32,7 +33,8 @@ namespace sockets {
 ///  Class: ConnectionT
 ///////////////////////////////////////////////////////////////////////
 template 
-<class TEndpoint = Endpoint, 
+<class TEndpoint = Endpoint,
+ class TInterface = Interface, 
  class TImplements = Implement, class TExtends = Extend>
 
 class _EXPORT_CLASS ConnectionT: virtual public TImplements, public TExtends {
@@ -40,21 +42,71 @@ public:
     typedef TImplements Implements;
     typedef TExtends Extends;
 
+    typedef TInterface Interface;
     typedef TEndpoint Endpoint;
+
+    typedef typename Interface::SendFlags SendFlags;
+    enum { SendFlagsDefault = Interface::SendFlagsDefault };
+
+    typedef typename Interface::RecvFlags RecvFlags;
+    enum { RecvFlagsDefault = Interface::RecvFlagsDefault };
     
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    ConnectionT(const Endpoint& endpoint) {
+    ConnectionT(Interface& socket, const Endpoint& endpoint)
+    : _socket(socket), _sendFlags(SendFlagsDefault), _recvFlags(RecvFlagsDefault) {
+        if (!(this->Connect(endpoint))) {
+            LOG_ERROR("...throw Exception(ExceptionFailed)...");
+            throw Exception(ExceptionFailed);
+        }
     }
-    ConnectionT(const ConnectionT& copy) {
+    ConnectionT(const ConnectionT& copy)
+    : _socket(copy.Socket()), _sendFlags(copy._sendFlags), _recvFlags(copy._recvFlags) {
     }
-    ConnectionT() {
+    ConnectionT(Interface& socket)
+    : _socket(socket), _sendFlags(SendFlagsDefault), _recvFlags(RecvFlagsDefault) {
     }
     virtual ~ConnectionT() {
     }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual bool Connect(const Endpoint& endpoint) {
+        bool success = _socket.Connect(endpoint);
+        return success;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t Send(const void* buf, size_t len) {
+        size_t count = _socket.Send(buf, len, _sendFlags);
+        return count; 
+    }
+    virtual ssize_t Recv(void* buf, size_t len) { 
+        size_t count = _socket.Recv(buf, len, _recvFlags);
+        return count; 
+    }
+    
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual SendFlags SetSendFlags(const SendFlags& to) {
+        _sendFlags = to;
+        return _sendFlags;
+    }
+    virtual RecvFlags SetRecvFlags(const RecvFlags& to) {
+        _recvFlags = to;
+        return _recvFlags;
+    }
+    virtual Interface& Socket() const {
+        return (Interface&)_socket;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+protected:
+    Interface& _socket;
+    SendFlags _sendFlags;
+    RecvFlags _recvFlags;
 }; /// class _EXPORT_CLASS ConnectionT
 typedef ConnectionT<> Connection;
 
