@@ -69,6 +69,11 @@ $${XRETE_SRC}/xos/network/sockets/ip/v4/tcp/Transport.hxx \
 $${XRETE_SRC}/xos/network/sockets/ip/udp/Transport.hxx \
 $${XRETE_SRC}/xos/network/sockets/ip/v4/udp/Transport.hxx \
 \
+$${XRETE_SRC}/xos/network/Endpoint.hxx \
+$${XRETE_SRC}/xos/network/sockets/Endpoint.hxx \
+$${XRETE_SRC}/xos/network/sockets/ip/Endpoint.hxx \
+$${XRETE_SRC}/xos/network/sockets/ip/v4/Endpoint.hxx \
+\
 $${XRETE_SRC}/xos/network/Connection.hxx \
 $${XRETE_SRC}/xos/network/sockets/Connection.hxx \
 \
