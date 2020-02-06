@@ -33,7 +33,7 @@ namespace tcp {
 ///  Class: TransportT
 ///////////////////////////////////////////////////////////////////////
 template <class TImplements = ip::Transport>
-class _EXPORT_CLASS TransportT: virtual public TImplements {
+class _EXPORTED_ TransportT: virtual public TImplements {
 public:
     typedef TImplements Implements;
 
@@ -57,7 +57,7 @@ public:
     
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-}; /// class _EXPORT_CLASS TransportT
+}; /// class _EXPORTED_ TransportT
 typedef TransportT<> Transport;
 
 } /// namespace tcp

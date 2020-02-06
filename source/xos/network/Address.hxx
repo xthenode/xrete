@@ -44,7 +44,7 @@ enum {
 
 namespace sockets {
 
-class _EXPORT_CLASS Address;
+class _EXPORTED_ Address;
 
 } /// namespace sockets
 
@@ -57,7 +57,7 @@ template
  class TSocketsAddress = sockets::Address,
  class TImplements = Implement>
 
-class _EXPORT_CLASS AddressT: virtual public TImplements {
+class _EXPORTED_ AddressT: virtual public TImplements {
 public:
     typedef TImplements Implements;
 
@@ -89,7 +89,7 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-}; /// class _EXPORT_CLASS AddressT
+}; /// class _EXPORTED_ AddressT
 typedef AddressT<> Address;
 
 } /// namespace network

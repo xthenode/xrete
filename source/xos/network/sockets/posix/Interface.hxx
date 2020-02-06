@@ -49,7 +49,7 @@ template
  <socket::AttachedTo, socket::UnattachedTo, socket::Unattached, TAttacher, TAttached>,
  class TImplements = TAttacher, class TExtends = TOpened>
 
-class _EXPORT_CLASS InterfaceT: virtual public TImplements, public TExtends {
+class _EXPORTED_ InterfaceT: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
@@ -187,7 +187,7 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-}; /// class _EXPORT_CLASS InterfaceT
+}; /// class _EXPORTED_ InterfaceT
 typedef InterfaceT<> Interface;
 
 } /// namespace posix

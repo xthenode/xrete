@@ -35,7 +35,7 @@ template
 <class TAddress = Address,
  class TExtends = Extend, class TImplements = typename TExtends::Implements>
 
-class _EXPORT_CLASS EndpointT: virtual public TImplements, public TExtends {
+class _EXPORTED_ EndpointT: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
@@ -89,7 +89,7 @@ protected:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-}; /// class _EXPORT_CLASS EndpointT
+}; /// class _EXPORTED_ EndpointT
 typedef EndpointT<> Endpoint;
 
 } /// namespace sockets

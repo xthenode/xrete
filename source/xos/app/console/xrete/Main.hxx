@@ -39,7 +39,7 @@ namespace xrete {
 template
 <class TExtends = MainOpt, class TImplements = typename TExtends::Implements>
 
-class _EXPORT_CLASS MainT: virtual public TImplements, public TExtends {
+class _EXPORTED_ MainT: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
@@ -147,7 +147,7 @@ protected:
     unsigned _clientPort, _serverPort;
     String _clientHost, _serverHost, _clientRequest, _serverResponse;
     char _response[2048];
-}; /// class _EXPORT_CLASS MainT
+}; /// class _EXPORTED_ MainT
 typedef MainT<> Main;
 
 } /// namespace xrete

@@ -30,13 +30,13 @@ namespace network {
 ///  Class: InterfaceT
 ///////////////////////////////////////////////////////////////////////
 template <class TImplements = Implement>
-class _EXPORT_CLASS InterfaceT: virtual public TImplements {
+class _EXPORTED_ InterfaceT: virtual public TImplements {
 public:
     typedef TImplements Implements;
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-}; /// class _EXPORT_CLASS InterfaceT
+}; /// class _EXPORTED_ InterfaceT
 typedef InterfaceT<> Interface;
 
 } /// namespace network

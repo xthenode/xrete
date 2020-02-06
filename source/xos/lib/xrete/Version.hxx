@@ -30,10 +30,10 @@ namespace xrete {
 ///////////////////////////////////////////////////////////////////////
 ///  Class: Version
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS Version {
+class _EXPORTED_ Version {
 public:
     static const lib::Version& Which();
-}; /// class _EXPORT_CLASS Version
+}; /// class _EXPORTED_ Version
 
 } /// namespace xrete
 } /// namespace lib

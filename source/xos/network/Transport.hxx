@@ -48,7 +48,7 @@ template
  typename TProtocol = transport::Protocol, TProtocol VProtocolUnspec = transport::ProtocolUnspec,
  class TImplements = Implement>
 
-class _EXPORT_CLASS TransportT: virtual public TImplements {
+class _EXPORTED_ TransportT: virtual public TImplements {
 public:
     typedef TImplements Implements;
 
@@ -75,7 +75,7 @@ public:
     
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-}; /// class _EXPORT_CLASS TransportT
+}; /// class _EXPORTED_ TransportT
 typedef TransportT<> Transport;
 
 } /// namespace network

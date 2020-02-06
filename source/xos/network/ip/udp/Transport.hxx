@@ -32,7 +32,7 @@ namespace udp {
 ///  Class: TransportT
 ///////////////////////////////////////////////////////////////////////
 template <class TImplements = network::ip::Transport>
-class _EXPORT_CLASS TransportT: virtual public TImplements {
+class _EXPORTED_ TransportT: virtual public TImplements {
 public:
     typedef TImplements Implements;
 
@@ -42,7 +42,7 @@ public:
     }
     virtual ~TransportT() {
     }
-}; /// class _EXPORT_CLASS TransportT
+}; /// class _EXPORTED_ TransportT
 typedef TransportT<> Transport;
 
 } /// namespace udp

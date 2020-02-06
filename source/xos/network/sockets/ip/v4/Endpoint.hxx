@@ -36,7 +36,7 @@ namespace v4 {
 template 
 <class TExtends = ip::Endpoint, class TImplements = typename TExtends::Implements>
 
-class _EXPORT_CLASS EndpointT: virtual public TImplements, public TExtends {
+class _EXPORTED_ EndpointT: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
@@ -78,7 +78,7 @@ protected:
 protected:
     Address _address;
     unsigned _port;
-}; /// class _EXPORT_CLASS EndpointT
+}; /// class _EXPORTED_ EndpointT
 typedef EndpointT<> Endpoint;
 
 } /// namespace v4

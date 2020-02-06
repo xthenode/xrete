@@ -40,7 +40,7 @@ template
  class TExtends = ip::Address, 
  class TImplements = typename TExtends::Implements>
 
-class _EXPORT_CLASS AddressT: virtual public TImplements, public TExtends {
+class _EXPORTED_ AddressT: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
@@ -173,7 +173,7 @@ protected:
     ///////////////////////////////////////////////////////////////////////
 protected:
     VersionSockAddr _socketAddress;
-}; /// class _EXPORT_CLASS AddressT
+}; /// class _EXPORTED_ AddressT
 typedef AddressT<> Address;
 
 } /// namespace v4

@@ -55,7 +55,7 @@ template
  class TImplements = AttacherT<TSockAddrAttached, int, 0, TImplement>,
  class TExtends = AttachedT<TSockAddrAttached, int, 0, TImplements, Extend> >
 
-class _EXPORT_CLASS AddressT: virtual public TImplements, public TExtends {
+class _EXPORTED_ AddressT: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
@@ -242,11 +242,11 @@ protected:
     ///////////////////////////////////////////////////////////////////////
 protected:
     SockLen _socketAddressLen;
-}; /// class _EXPORT_CLASS AddressT
+}; /// class _EXPORTED_ AddressT
 typedef AddressT<> Address;
 } /// namespace extended
 
-class _EXPORT_CLASS Address
+class _EXPORTED_ Address
 : virtual public extended::Address::Implements, public extended::Address {
 public:
     typedef extended::Address::Implements Implements;
@@ -269,7 +269,7 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-}; /// class _EXPORT_CLASS Address
+}; /// class _EXPORTED_ Address
 
 } /// namespace sockets
 } /// namespace network

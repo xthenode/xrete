@@ -65,9 +65,9 @@ typedef transport::Domain Domain;
 typedef transport::Type Type;
 typedef transport::Protocol Protocol;
 
-class _EXPORT_CLASS Interface;
+class _EXPORTED_ Interface;
 namespace implemented {
-class _EXPORT_CLASS Interface;
+class _EXPORTED_ Interface;
 } /// namespace implemented
 
 namespace implement {
@@ -83,7 +83,7 @@ template
  class TEndpoint = Endpoint,
  class TImplements = OpenerT<network::Interface> >
 
-class _EXPORT_CLASS InterfaceT: virtual public TImplements {
+class _EXPORTED_ InterfaceT: virtual public TImplements {
 public:
     typedef TImplements Implements;
 
@@ -355,14 +355,14 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-}; /// class _EXPORT_CLASS InterfaceT
+}; /// class _EXPORTED_ InterfaceT
 typedef InterfaceT<> Interface;
 } /// namespace implement
 
 ///////////////////////////////////////////////////////////////////////
 ///  Class: Interface
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS Interface: virtual public implement::Interface {
+class _EXPORTED_ Interface: virtual public implement::Interface {
 public:
     typedef implement::Interface Implements;
     ///////////////////////////////////////////////////////////////////////

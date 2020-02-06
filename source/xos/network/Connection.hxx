@@ -32,7 +32,7 @@ namespace network {
 template 
 <class TImplements = Implement, class TExtends = Extend>
 
-class _EXPORT_CLASS ConnectionT: virtual public TImplements, public TExtends {
+class _EXPORTED_ ConnectionT: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
@@ -48,7 +48,7 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-}; /// class _EXPORT_CLASS ConnectionT
+}; /// class _EXPORTED_ ConnectionT
 typedef ConnectionT<> Connection;
 
 } /// namespace network
